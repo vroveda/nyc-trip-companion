@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { ChevronDown, AlertTriangle, Star } from "lucide-react";
 import { days, TRIP_START } from "@/lib/trip-data";
+import { DayMap } from "@/components/DayMap";
 
 export const Route = createFileRoute("/")({
   component: RoteiroPage,
@@ -53,7 +54,7 @@ function RoteiroPage() {
 
       <h2 className="mb-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">Roteiro · 8 dias</h2>
 
-      <ul className="flex flex-col gap-3">
+      <ul className="flex flex-col gap-3 pb-8">
         {days.map((d) => {
           const isToday = d.date === today;
           const isOpen = open === d.n;
@@ -79,8 +80,13 @@ function RoteiroPage() {
                 </div>
                 <ChevronDown className={`h-5 w-5 shrink-0 text-muted-foreground transition-transform ${isOpen ? "rotate-180 text-gold" : ""}`} />
               </button>
+
               {isOpen && (
                 <div className="border-t border-border/60 px-4 py-4">
+                  {/* MAP */}
+                  <DayMap items={d.items} dayN={d.n} />
+
+                  {/* TIMELINE */}
                   <ol className="flex flex-col gap-3">
                     {d.items.map((it, i) => (
                       <li key={i} className="flex gap-3">
@@ -97,6 +103,17 @@ function RoteiroPage() {
                             {it.star && <Star className="mt-0.5 h-4 w-4 shrink-0 text-gold" />}
                             <span className="leading-snug">{it.text}</span>
                           </div>
+                          {/* Maps button for items with coords */}
+                          {it.coords && it.mapsQuery && (
+                            <a
+                              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(it.mapsQuery)}`}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="mt-1 inline-flex items-center gap-1 rounded-lg border border-gold/30 bg-gold/5 px-2 py-0.5 text-[11px] text-gold active:bg-gold/15"
+                            >
+                              📍 Maps
+                            </a>
+                          )}
                         </div>
                       </li>
                     ))}
