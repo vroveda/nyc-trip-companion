@@ -60,7 +60,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:type", content: "website" },
     ],
-    links: [{ rel: "stylesheet", href: appCss }],
+    links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "stylesheet", href: "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" },
+    ],
+    scripts: [
+      { src: "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js", defer: true },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
