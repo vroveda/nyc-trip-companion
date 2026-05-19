@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ChevronDown, AlertTriangle, Star } from "lucide-react";
 import { days, TRIP_START } from "@/lib/trip-data";
 import { DayMap } from "@/components/DayMap";
+import { WeatherWidget } from "@/components/WeatherWidget";
 
 export const Route = createFileRoute("/")({
   component: RoteiroPage,
@@ -51,6 +52,8 @@ function RoteiroPage() {
           </div>
         </div>
       </header>
+
+      <WeatherWidget />
 
       <h2 className="mb-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">Roteiro · 8 dias</h2>
 
